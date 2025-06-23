@@ -1,6 +1,6 @@
 # confgen
 
-Генератор WireGuard-конфигов с поддержкой Cloudflare WARP и прокси для Windows
+Генератор WireGuard-конфигов с поддержкой Cloudflare WARP и прокси
 
 ## Описание
 
