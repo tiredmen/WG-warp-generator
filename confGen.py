@@ -3,8 +3,6 @@ import subprocess
 import json
 import qrcode
 import base64
-import os
-import random
 
 def parse_proxy_line(line):
     """Преобразует строку ip:port:login:password в socks5h://login:password@ip:port"""
@@ -28,7 +26,7 @@ def get_random_proxy():
     else:
         return None
 
-# ЕСЛИ нужен прокси (например, через TOR), раскомментируй этот блок:
+# Если не нужен прокси (например, через TOR), закомментируй этот блок:
 proxies = get_random_proxy()
 
 def gen_wg_keys():
