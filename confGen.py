@@ -5,7 +5,7 @@ import qrcode
 import base64
 
 def parse_proxy_line(line):
-    """Преобразует строку ip:port:login:password в socks5h://login:password@ip:port"""
+    # Преобразует строку ip:port:login:password в socks5h://login:password@ip:port
     parts = line.strip().split(':')
     if len(parts) == 4:
         ip, port, login, password = parts
@@ -70,13 +70,34 @@ AllowedIPs = 0.0.0.0/0, ::/0
 Endpoint = 188.114.99.224:1002
 """
 
+def safe_get(d, *keys):
+    for key in keys:
+        d = d.get(key, {})
+    return d or None
+
 def main():
     print("Генерируем ключи WireGuard...")
     priv, pub = gen_wg_keys()
 
-    api = "https://api.cloudflareclient.com/v0i1909051800"
+    api_versions = [
+    "v0a769", "v0i1909051800", "v0a215"
+    ]
+
+    reg = None
+    api = None
+    for version in api_versions:
+        api = f"https://api.cloudflareclient.com/{version}"
+        try:
+            reg = register_device(api, pub)
+            if "result" in reg:
+                break
+        except Exception:
+            continue
+    else:
+        print("Не удалось зарегистрировать устройство ни на одной из версий API.")
+        return
+
     print("Регистрируем устройство в Cloudflare...")
-    reg = register_device(api, pub)
     id_ = reg["result"]["id"]
     token = reg["result"]["token"]
 

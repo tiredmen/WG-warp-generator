@@ -1,4 +1,5 @@
-# confgen 
+# confgen
+
 ***НЕ РАБОТАЕТ***
 
 Генератор WireGuard-конфигов с поддержкой Cloudflare WARP и прокси
